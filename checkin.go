@@ -86,7 +86,7 @@ func main() {
 	default:
 		s := fmt.Sprintf("张大妈签到失败 %s ErrCode:%d,ErrMsg:%s", time.Now().Format("2006-01-02"), ct.ErrorCode, ct.ErrorMsg)
 		log.Println(s)
-		Send(s)
+		// Send(s)
 	}
 
 }

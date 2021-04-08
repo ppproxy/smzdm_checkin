@@ -13,9 +13,9 @@ import (
 
 var (
 	_url            = "https://zhiyou.smzdm.com/user/checkin/jsonp_checkin"
-	qmsgurl         = "https://qmsg.zendee.cn/send/"
+	chanify_url		= "https://api.chanify.net/v1/sender/"
 	smzdm_cookie    = ""
-	qmsgkey         = ""
+	chanify_token	= ""
 	default_headers = map[string]string{
 		"Accept":     "*/*",
 		"Host":       "zhiyou.smzdm.com",
@@ -47,10 +47,10 @@ func initCheck() {
 	if os.Getenv("SMZDM_COOKIE") == "" {
 		panic("SMZDM_COOKIE 为空")
 	}
-	if os.Getenv("QMSGKEY") == "" {
-		fmt.Println("QMSGKEY 未设置，无失败通知")
+	if os.Getenv("CHANIFY_TOKEN") == "" {
+		fmt.Println("CHANIFY_TOKEN 未设置，无失败通知")
 	} else {
-		qmsgkey = os.Getenv("QMSGKEY")
+		chanify_token = os.Getenv("CHANIFY_TOKEN")
 	}
 }
 func main() {
@@ -86,19 +86,19 @@ func main() {
 	default:
 		s := fmt.Sprintf("张大妈签到失败 %s ErrCode:%d,ErrMsg:%s", time.Now().Format("2006-01-02"), ct.ErrorCode, ct.ErrorMsg)
 		log.Println(s)
-		// Send(s)
+		Send(s)
 	}
 
 }
 
 func Send(msg string) {
-	if len(qmsgkey) < 5 {
-		log.Println("未设置Qmsg key，不发送通知")
+	if len(chanify_token) < 5 {
+		log.Println("未设置chanify_token，不发送通知")
 		return
 	}
 	v := url.Values{}
-	v.Add("msg", msg)
-	req, _ := http.NewRequest(http.MethodPost, qmsgurl+qmsgkey, strings.NewReader(v.Encode()))
+	v.Add("text", msg)
+	req, _ := http.NewRequest(http.MethodPost, chanify_url+chanify_token, strings.NewReader(v.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	_, err := http.DefaultClient.Do(req)

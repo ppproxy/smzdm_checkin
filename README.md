@@ -1,4 +1,6 @@
-# 什么值得买 签到
+# smzdm checkin
+
+[![SMZDM Checkin](https://github.com/ppproxy/smzdm_checkin/actions/workflows/checkin.yaml/badge.svg?branch=master)](https://github.com/ppproxy/smzdm_checkin/actions/workflows/checkin.yaml)
 
 ## 食用方法
 
